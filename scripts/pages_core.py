@@ -68,8 +68,15 @@ def main_page():
 {render_tier('premium', limit=8)}
 
 <section class="section reveal" style="max-width:900px"><div class="kicker">WHO · HOW · WHY</div>
-<h2 style="margin:6px 0 10px">운영팀이 직접 검증합니다</h2>
-<p class="lead" style="margin-bottom:22px">마톡 콘텐츠는 매칭 로그 {STATS['match_logs']}건과 샵 인터뷰 {STATS['shop_interviews']}건을 기반으로, 책임 저자가 작성하고 검수합니다.</p>
+<h2 style="margin:6px 0 16px">운영팀이 직접 검증합니다</h2>
+<div class="note-text" style="max-width:780px;margin-bottom:30px">
+<div style="margin-bottom:20px"><span class="kicker">WHO · 누가</span>
+<p style="margin-top:8px">마톡의 콘텐츠는 익명의 외주 작성자가 아니라, 실명과 경력을 공개한 운영팀이 직접 만들고 검수합니다. 9년차 채용 데이터 분석가 김세영이 시장 리서치와 매칭 로그 검증을 총괄하고, 이도윤이 로드샵 현장 검증과 안전 게재 정책을 책임집니다. KSPO 생활스포츠지도사 박지연은 관리사 입문 교육과 역량 기준을 자문합니다. 각 담당자는 자신의 전문 영역에 대해 책임을 지며, 모든 페이지 하단에는 사업자 정보와 연락처를 투명하게 공개합니다. 누가 만들었는지 명확히 밝히는 것이 신뢰의 출발점이라고 믿기 때문입니다.</p></div>
+<div style="margin-bottom:20px"><span class="kicker">HOW · 어떻게</span>
+<p style="margin-top:8px">모든 일급 시세와 지역 수요 정보는 누적 매칭 로그 {STATS['match_logs']}건과 로드샵 현장 인터뷰 {STATS['shop_interviews']}건이라는 1차 데이터에서 출발합니다. 서울·경기·인천·부산 82개 행정구를 직접 조사해 랜드마크·교통·고객층·강세 업종을 구별로 정리했고, 시장 상황이 바뀌면 정기적으로 갱신합니다. 공고를 게재하기 전에는 사업자 등록과 영업 신고 여부를 확인하며, 모든 수치는 추정이 아닌 실제 데이터에 근거합니다. 어디서나 볼 수 있는 일반적인 요약이 아니라, 마톡이 직접 수집하고 검증한 원본 데이터만 제공하는 것이 원칙입니다.</p></div>
+<div><span class="kicker">WHY · 왜</span>
+<p style="margin-top:8px">마사지 구인구직은 일하는 사람의 안전과 수입에 직결된 민감한 영역입니다. 그래서 마톡은 직업정보제공사업 신고를 갖춘 합법 업체의 공고만 게재하고, 불법 영업이 의심되는 업소는 사업자 정보 확인 단계에서 게재를 거부합니다. 고수익을 미끼로 한 해외 송출이나 정상 시술과 무관한 모집은 일절 취급하지 않습니다. 정확하고 검증된 정보로 관리사와 안전한 일터를 연결하는 것, 그것이 마톡이 존재하는 이유입니다.</p></div>
+</div>
 <div class="grid g3">{team_cards}</div></section>
 
 <section class="section reveal"><h2 style="font-size:28px">자주 묻는 질문</h2>{faq_html(faqs)}</section>
