@@ -2,7 +2,8 @@
 """핵심 페이지: 메인·About·Contact·Pricing·Reviews·정책·광고상품·업소매매·공지."""
 
 from data import (COMPANY, INDUSTRIES, REGIONS, NATIONALITIES, TEAM, STATS,
-                  PRICING_RECRUIT, PRICING_SHOP, MAGAZINE, NOTICES, SHOP_SALES)
+                  PRICING_RECRUIT, PRICING_SHOP, MAGAZINE, NOTICES, SHOP_SALES,
+                  MIN_WAGE)
 from templates import U, page, breadcrumb, faq_node, faq_html
 from ads import render_tier
 from district_profiles import get_profile
@@ -151,31 +152,91 @@ def contact_page():
 
 # ── Pricing (급여 시세) ──────────────────────────────────────
 def pricing_page():
+    mw = MIN_WAGE
     rows = "".join(
         f'<tr><td>{i["name"]}</td><td style="text-align:right">{i["wage_lo"]}만원</td>'
         f'<td style="text-align:right;color:var(--blue-1);font-weight:700">{i["wage"]}만원</td>'
         f'<td style="text-align:right">{i["wage_hi"]}만원</td>'
         f'<td style="text-align:right">{i["wage"]*26}만원</td></tr>' for i in INDUSTRIES)
+    # 시급 환산표 (1일 8시간 기준 참고치)
+    hrows = ""
+    for i in INDUSTRIES:
+        hourly = round(i["wage"] * 10000 / 8)
+        ratio = hourly / mw["hourly"]
+        hrows += (f'<tr><td>{i["name"]}</td>'
+                  f'<td style="text-align:right">{i["wage"]}만원</td>'
+                  f'<td style="text-align:right;color:var(--blue-1);font-weight:700">{hourly:,}원</td>'
+                  f'<td style="text-align:right">최저시급의 약 {ratio:.1f}배</td></tr>')
+    faqs = [
+        (f"{mw['year']}년 대한민국 최저시급은 얼마인가요?",
+         f"{mw['year']}년 법정 최저시급은 {mw['hourly']:,}원입니다. 전년({mw['prev_hourly']:,}원) 대비 {mw['increase_pct']}% 인상되었으며, 월 {mw['monthly_hours']}시간(주휴 포함) 환산 시 약 {mw['monthly']:,}원입니다."),
+        ("마사지 관리사도 최저임금이 적용되나요?",
+         "근로자로 근무하는 경우 업종·지역과 관계없이 최저임금이 동일하게 적용됩니다. 다만 위탁·프리랜서 계약 등 근무 형태에 따라 적용 방식이 달라질 수 있으므로 근로계약서를 반드시 확인하세요."),
+        ("마사지 일급을 시급으로 어떻게 환산하나요?",
+         f"근무 시간으로 나누면 됩니다. 예를 들어 평균 일급 16만원을 하루 8시간으로 나누면 시급 약 2만원으로, {mw['year']}년 최저시급의 약 1.9배 수준입니다. 다만 실제 수입은 시술 건수·단골 비중·인센티브에 따라 달라집니다."),
+        ("최저임금보다 적게 받으면 어떻게 하나요?",
+         "최저임금 미만 지급은 법 위반입니다. 근로계약서와 정산 내역을 갖추어 고용노동부 고객상담센터(1350)나 관할 지방고용노동청에 신고·상담할 수 있습니다."),
+    ]
     g = [{"@type": "WebPage", "name": "마사지 급여 시세", "url": U + "/pricing/"},
+         faq_node(faqs),
          breadcrumb([("홈", "/"), ("급여 시세", "/pricing/")])]
     body = f"""<section class="hero"><div class="hero-grid reveal">
-<div class="kicker">2026 급여 시세</div><h1>마사지 관리사<br><span class="grad-text">급여 시세표</span></h1>
-<p class="lead" style="margin-top:18px">업종별 일급 시세와 월 환산 수입을 매칭 데이터 기반으로 정리했습니다.</p>
+<div class="kicker">{mw['year']} 급여 시세</div><h1>마사지 관리사<br><span class="grad-text">급여 시세표</span></h1>
+<p class="lead" style="margin-top:18px">{mw['year']}년 최저임금 기준과 업종별 일급·시급 환산을 매칭 데이터로 정리했습니다.</p>
 </div></section>
+
 <section class="section reveal" style="max-width:820px">
+<div class="kicker">기준선</div><h2 style="margin:6px 0 14px">{mw['year']}년 대한민국 최저임금</h2>
+<div class="grid g3" style="margin-bottom:18px">
+<div class="card"><span class="dim" style="font-size:13px">최저시급</span>
+<div class="price-num">{mw['hourly']:,}원</div>
+<p class="dim" style="font-size:13px;margin-top:6px">전년 대비 +{mw['increase_pct']}%</p></div>
+<div class="card"><span class="dim" style="font-size:13px">월 환산({mw['monthly_hours']}시간)</span>
+<div class="price-num" style="font-size:26px">{mw['monthly']:,}원</div>
+<p class="dim" style="font-size:13px;margin-top:6px">주휴수당 포함</p></div>
+<div class="card"><span class="dim" style="font-size:13px">2025년 최저시급</span>
+<div class="price-num" style="font-size:26px">{mw['prev_hourly']:,}원</div>
+<p class="dim" style="font-size:13px;margin-top:6px">→ {mw['year']}년 {mw['hourly']:,}원</p></div>
+</div>
+<p class="note-text">{mw['year']}년 법정 최저시급은 <b>{mw['hourly']:,}원</b>으로, 2025년 {mw['prev_hourly']:,}원에서 {mw['increase_pct']}% 인상되었습니다. 하루 8시간·주 40시간 근무 시 주휴수당을 포함한 월 환산액(월 {mw['monthly_hours']}시간)은 약 <b>{mw['monthly']:,}원</b>입니다. 최저임금은 업종·지역과 관계없이 모든 사업장에 적용되는 법적 하한선이며, 마사지 관리사로 근무할 때도 동일하게 보장받아야 하는 최소 기준입니다.</p>
+</section>
+
+<section class="section reveal" style="max-width:820px">
+<div class="kicker">업종별 일급</div><h2 style="margin:6px 0 14px">업종별 일급 시세</h2>
 <table style="width:100%;border-collapse:collapse;font-size:15px">
 <thead><tr style="border-bottom:1px solid var(--line);color:var(--dim);font-size:13px">
 <th style="text-align:left;padding:12px 0">업종</th><th style="text-align:right">신입</th>
 <th style="text-align:right">평균</th><th style="text-align:right">경력</th><th style="text-align:right">월 환산</th></tr></thead>
 <tbody>{rows}</tbody></table>
 <p class="dim" style="font-size:13px;margin-top:14px">※ 월 환산은 평균 일급 × 26일 기준 참고치입니다. 상권·경력·근무시간에 따라 달라집니다.</p>
+</section>
+
+<section class="section reveal" style="max-width:820px">
+<div class="kicker">시급 환산</div><h2 style="margin:6px 0 14px">마사지 업종 시급 환산</h2>
+<p class="note-text" style="margin-bottom:16px">마사지 관리사의 수입은 시급제보다 일급 또는 타임제(시술 건당 정산)가 일반적입니다. 아래 표는 업종별 평균 일급을 하루 8시간 기준으로 단순 환산한 <b>참고 시급</b>으로, 모든 업종이 {mw['year']}년 법정 최저시급({mw['hourly']:,}원)을 크게 웃돕니다. 이는 전문 기술과 체력이 요구되는 직무 특성이 반영된 결과입니다.</p>
+<table style="width:100%;border-collapse:collapse;font-size:15px">
+<thead><tr style="border-bottom:1px solid var(--line);color:var(--dim);font-size:13px">
+<th style="text-align:left;padding:12px 0">업종</th><th style="text-align:right">평균 일급</th>
+<th style="text-align:right">환산 시급(8h)</th><th style="text-align:right">최저시급 대비</th></tr></thead>
+<tbody>{hrows}</tbody></table>
+<p class="dim" style="font-size:13px;margin-top:14px">※ 환산 시급은 평균 일급 ÷ 8시간 기준 참고치입니다. 실제 수입은 시술 건수·단골 비중·인센티브·정산 방식에 따라 달라집니다.</p>
+</section>
+
+<section class="section reveal" style="max-width:820px">
+<div class="kicker">실수령액 체크</div><h2 style="margin:6px 0 14px">최저임금과 실수령액</h2>
+<p class="note-text">일급이 최저임금을 웃돌더라도 실제 손에 쥐는 금액은 정산 방식과 공제 항목에 따라 달라집니다. 계약 전 카드 수수료 부담 주체, 노쇼·취소 시 정산 기준, 4대 보험 가입 여부, 수습 기간 일급을 근로계약서에서 반드시 확인하세요. 최저임금 미만 지급이나 임금체불이 발생하면 고용노동부 고객상담센터(1350)에 상담·신고할 수 있습니다.</p>
+</section>
+
+<section class="section reveal" style="max-width:820px">
+<h2 style="font-size:26px">급여 자주 묻는 질문</h2>{faq_html(faqs)}
 <div class="linkbox" style="margin-top:34px"><h3>급여 관련 더 알아보기</h3>
 <a href="/magazine/salary-guide-2026/">2026 급여 시세 완전정리</a>
 <a href="/magazine/shop-vs-freelance/">로드샵 vs 프리랜서 수입 비교</a>
+<a href="/magazine/contract-checklist/">근로계약서 체크리스트 — 일급·정산 확인</a>
 <a href="/jobs/">업종별 구인공고 보기</a></div>
 </section>"""
-    return ("/pricing/", page(f"2026 마사지 관리사 급여 시세표 — 업종별 일급 | {COMPANY['brand']}",
-            "2026 마사지 관리사 급여 시세표. 스웨디시·아로마·타이·로미로미·스포츠 업종별 신입·평균·경력 일급과 월 환산 수입을 정리했습니다.",
+    return ("/pricing/", page(f"{mw['year']} 마사지 관리사 급여 시세표 — 최저시급·업종별 일급·시급 | {COMPANY['brand']}",
+            f"{mw['year']}년 대한민국 최저시급 {mw['hourly']:,}원 기준, 마사지 관리사 업종별 일급·시급 환산·월 환산 수입 정리. 스웨디시·아로마·타이·로미로미·스포츠 급여 시세를 한눈에 확인하세요.",
             "/pricing/", body, g))
 
 
@@ -466,8 +527,8 @@ def shop_sale_detail(s):
 <li>시설·집기 인수 범위와 상태 점검</li>
 </ul>
 <div class="linkbox" style="margin-top:30px"><h3>매수 문의</h3>
-<p>이 매물에 관심이 있으시면 아래로 문의하세요. 매수자와 1:1로 매칭됩니다.</p>
-<a href="mailto:{COMPANY['email']}?subject=[매수문의] {s['title']}">{COMPANY['email']} 로 매수 문의 →</a></div>
+<p>이 매물은 운영자를 거치지 않고 매수자와 매도자가 직접 연결됩니다. 아래 번호로 전화 문의하세요.</p>
+<a href="tel:{s.get('tel','0507-0000-0000').replace('-','')}" class="btn btn-grad" style="margin-top:8px;justify-content:center">전화로 매수 문의 {s.get('tel','0507-0000-0000')}</a></div>
 
 <h2 style="margin-top:30px">관련 매물</h2>
 <div class="linkbox">{related}</div>
