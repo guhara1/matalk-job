@@ -82,8 +82,8 @@ REGIONS = [
         ("icheon", "이천시"), ("yangju", "양주시"), ("anseong", "안성시"),
         ("guri", "구리시"), ("pocheon", "포천시"), ("uiwang", "의왕시"),
         ("hanam", "하남시"), ("yeoju", "여주시"), ("dongducheon", "동두천시"),
-        ("gwacheon", "과천시"), ("namhha", "남양주별내"), ("bundang", "성남분당"),
-        ("ilsan", "고양일산"),
+        ("gwacheon", "과천시"), ("yangpyeong", "양평군"), ("gapyeong", "가평군"),
+        ("yeoncheon", "연천군"),
     ]},
     {"slug": "incheon", "name": "인천", "full": "인천광역시", "districts": [
         ("jung-incheon", "중구"), ("dong-incheon", "동구"), ("michuhol", "미추홀구"),
@@ -173,77 +173,97 @@ NOTICES = [
      "lead": "임금체불·부당대우 발생 시 이용 가능한 공식 신고 창구."},
 ]
 
-# ── 광고 상세 (샘플 공고) ────────────────────────────────────
-# tier: vvip/vip/premium
-ADS = [
-    {"id": "a1001", "tier": "vvip", "shop": "라온테라피 강남점", "title": "스웨디시 관리사 모집 (정규)",
-     "region": "서울", "district": "강남구", "industry": "스웨디시", "wage": 22,
-     "people": 3, "hours": "12:00~24:00 (탄력)", "contract": "정규직", "settle": "일정산/주정산 택1"},
-    {"id": "a1002", "tier": "vvip", "shop": "오아시스 스파 해운대", "title": "아로마·스웨디시 경력자 우대",
-     "region": "부산", "district": "해운대구", "industry": "아로마", "wage": 21,
-     "people": 2, "hours": "11:00~23:00", "contract": "정규직", "settle": "주정산"},
-    {"id": "a1003", "tier": "vvip", "shop": "더휴 분당점", "title": "타이 마사지 관리사 급구",
-     "region": "경기", "district": "성남분당", "industry": "타이", "wage": 20,
-     "people": 4, "hours": "13:00~25:00", "contract": "정규/파트", "settle": "일정산"},
-    {"id": "a1004", "tier": "vvip", "shop": "세레니티 송도", "title": "프리미엄 스파 관리사 모집",
-     "region": "인천", "district": "연수구", "industry": "아로마", "wage": 23,
-     "people": 2, "hours": "10:00~22:00", "contract": "정규직", "settle": "월정산+인센티브"},
-    {"id": "a2001", "tier": "vip", "shop": "힐링타임 서초", "title": "로미로미 관리사 모집",
-     "region": "서울", "district": "서초구", "industry": "로미로미", "wage": 18,
-     "people": 2, "hours": "12:00~24:00", "contract": "정규/파트", "settle": "주정산"},
-    {"id": "a2002", "tier": "vip", "shop": "바디케어 수원", "title": "스포츠 마사지 경력자",
-     "region": "경기", "district": "수원시", "industry": "스포츠", "wage": 19,
-     "people": 3, "hours": "11:00~22:00", "contract": "정규직", "settle": "일정산"},
-    {"id": "a2003", "tier": "vip", "shop": "더테라피 부평", "title": "스웨디시 신입·경력 모집",
-     "region": "인천", "district": "부평구", "industry": "스웨디시", "wage": 16,
-     "people": 4, "hours": "12:00~24:00", "contract": "정규/파트", "settle": "주정산"},
-    {"id": "a2004", "tier": "vip", "shop": "리프레시 서면", "title": "아로마 관리사 채용",
-     "region": "부산", "district": "부산진구", "industry": "아로마", "wage": 17,
-     "people": 2, "hours": "13:00~25:00", "contract": "정규직", "settle": "일정산"},
-    {"id": "a2005", "tier": "vip", "shop": "포레스트 일산", "title": "타이·스웨디시 관리사",
-     "region": "경기", "district": "고양일산", "industry": "타이", "wage": 18,
-     "people": 3, "hours": "12:00~24:00", "contract": "정규/파트", "settle": "주정산"},
-    {"id": "a2006", "tier": "vip", "shop": "스파드림 송파", "title": "프리미엄 아로마 관리사",
-     "region": "서울", "district": "송파구", "industry": "아로마", "wage": 19,
-     "people": 2, "hours": "11:00~23:00", "contract": "정규직", "settle": "월정산"},
-    # 프리미엄 12
-    {"id": "p3001", "tier": "premium", "shop": "데일리스파 마포", "title": "스웨디시 파트 모집",
-     "region": "서울", "district": "마포구", "industry": "스웨디시", "wage": 15,
-     "people": 2, "hours": "13:00~22:00", "contract": "파트타임", "settle": "일정산"},
-    {"id": "p3002", "tier": "premium", "shop": "굿핸즈 안양", "title": "아로마 신입 환영",
-     "region": "경기", "district": "안양시", "industry": "아로마", "wage": 15,
-     "people": 3, "hours": "12:00~24:00", "contract": "정규/파트", "settle": "주정산"},
-    {"id": "p3003", "tier": "premium", "shop": "포근한손 동래", "title": "타이 관리사 모집",
-     "region": "부산", "district": "동래구", "industry": "타이", "wage": 16,
-     "people": 2, "hours": "11:00~23:00", "contract": "정규직", "settle": "일정산"},
-    {"id": "p3004", "tier": "premium", "shop": "휴식공간 남동", "title": "스포츠 마사지 경력",
-     "region": "인천", "district": "남동구", "industry": "스포츠", "wage": 17,
-     "people": 2, "hours": "12:00~22:00", "contract": "정규직", "settle": "주정산"},
-    {"id": "p3005", "tier": "premium", "shop": "릴랙스 용산", "title": "로미로미 파트",
-     "region": "서울", "district": "용산구", "industry": "로미로미", "wage": 16,
-     "people": 1, "hours": "13:00~23:00", "contract": "파트타임", "settle": "일정산"},
-    {"id": "p3006", "tier": "premium", "shop": "바디앤소울 부천", "title": "스웨디시 모집",
-     "region": "경기", "district": "부천시", "industry": "스웨디시", "wage": 15,
-     "people": 3, "hours": "12:00~24:00", "contract": "정규/파트", "settle": "주정산"},
-    {"id": "p3007", "tier": "premium", "shop": "참살이 노원", "title": "아로마 신입·경력",
-     "region": "서울", "district": "노원구", "industry": "아로마", "wage": 15,
-     "people": 2, "hours": "12:00~23:00", "contract": "정규직", "settle": "일정산"},
-    {"id": "p3008", "tier": "premium", "shop": "테라스파 광진", "title": "타이 마사지 파트",
-     "region": "서울", "district": "광진구", "industry": "타이", "wage": 16,
-     "people": 1, "hours": "13:00~22:00", "contract": "파트타임", "settle": "일정산"},
-    {"id": "p3009", "tier": "premium", "shop": "하루케어 안산", "title": "스웨디시 경력 우대",
-     "region": "경기", "district": "안산시", "industry": "스웨디시", "wage": 16,
-     "people": 2, "hours": "12:00~24:00", "contract": "정규직", "settle": "주정산"},
-    {"id": "p3010", "tier": "premium", "shop": "온더스파 연제", "title": "아로마 관리사",
-     "region": "부산", "district": "연제구", "industry": "아로마", "wage": 16,
-     "people": 2, "hours": "11:00~23:00", "contract": "정규/파트", "settle": "일정산"},
-    {"id": "p3011", "tier": "premium", "shop": "쉼표테라피 계양", "title": "스포츠 마사지",
-     "region": "인천", "district": "계양구", "industry": "스포츠", "wage": 17,
-     "people": 1, "hours": "12:00~22:00", "contract": "정규직", "settle": "주정산"},
-    {"id": "p3012", "tier": "premium", "shop": "느린오후 성북", "title": "로미로미 신입",
-     "region": "서울", "district": "성북구", "industry": "로미로미", "wage": 15,
-     "people": 2, "hours": "13:00~23:00", "contract": "정규/파트", "settle": "일정산"},
+# ── 광고(채용공고) — 82개 행정구 전역에 분산 자동 생성 ──────────
+# 운영자가 실제 공고를 입력하면 이 생성 데이터를 대체한다(샘플/데모 데이터).
+# tier: vvip(4) / vip(12) / premium(행정구별 1건)
+_SHOP_WORDS = [
+    "라온", "오아시스", "더휴", "세레니티", "힐링타임", "바디케어", "더테라피",
+    "리프레시", "포레스트", "스파드림", "데일리스파", "굿핸즈", "포근한손",
+    "휴식공간", "릴랙스", "바디앤소울", "참살이", "테라스파", "하루케어",
+    "온더스파", "쉼표테라피", "느린오후", "솔채", "봄날테라피", "미가스파",
+    "헬로스파", "더네스트", "아우라", "블리스", "노블스파", "라플로라", "모먼트",
+    "휴랑", "르윈", "코지스파", "마레", "솔티", "청담힐", "온기테라피", "담소",
+    "해온", "나린", "여유공간", "스파로", "채움", "정담", "포레", "한결", "별채",
 ]
+_HOURS = ["12:00~24:00", "11:00~23:00", "13:00~25:00", "12:00~22:00",
+          "13:00~23:00", "11:00~22:00", "12:00~24:00 (탄력)"]
+_CONTRACTS = ["정규직", "정규/파트", "파트타임"]
+_SETTLES = ["일정산", "주정산", "월정산+인센티브", "일정산/주정산 택1"]
+_PEOPLE = [2, 3, 1, 4, 2, 3]
+
+
+def _short(dn):
+    return dn[:-1] if dn[-1] in "구시군" else dn
+
+
+def _ind_by_name(name):
+    for i in INDUSTRIES:
+        if i["name"] == name:
+            return i
+    return INDUSTRIES[0]
+
+
+def _title(name, i):
+    opts = [f"{name} 관리사 모집", f"{name} 마사지 관리사 채용", f"{name} 신입·경력 모집",
+            f"{name} 경력자 우대 채용", f"{name} 관리사 급구", f"{name} 정규·파트 모집"]
+    return opts[i % len(opts)]
+
+
+def generate_ads():
+    from district_profiles import get_profile
+    # (지역명, 행정구명) → svc  (행정구명은 지역 간 중복되므로 튜플로 구분)
+    svc_of = {}
+    for r in REGIONS:
+        for ds, dn in r["districts"]:
+            svc_of[(r["name"], dn)] = get_profile(ds, dn)["svc"]
+
+    ads = []
+    # VVIP 4 — 프리미엄 핵심 상권
+    vvip = [("서울", "강남구", "아로마", 22), ("부산", "해운대구", "아로마", 23),
+            ("경기", "성남시", "타이", 21), ("인천", "연수구", "아로마", 23)]
+    for k, (rg, dn, ind, w) in enumerate(vvip):
+        ads.append({"id": f"a10{k+1:02d}", "tier": "vvip",
+                    "shop": f"{_SHOP_WORDS[k]} {_short(dn)}점", "title": _title(ind, k),
+                    "region": rg, "district": dn, "industry": ind, "wage": w,
+                    "people": _PEOPLE[k % len(_PEOPLE)], "hours": _HOURS[k % len(_HOURS)],
+                    "contract": "정규직", "settle": _SETTLES[k % len(_SETTLES)]})
+
+    # VIP 12 — 주요 상권
+    vip = [("서울", "서초구"), ("서울", "송파구"), ("서울", "마포구"), ("서울", "강서구"),
+           ("경기", "수원시"), ("경기", "용인시"), ("경기", "고양시"), ("경기", "부천시"),
+           ("인천", "부평구"), ("인천", "남동구"), ("부산", "부산진구"), ("부산", "동래구")]
+    used = {(rg, dn) for rg, dn, _, _ in vvip} | set(vip)
+    for k, (rg, dn) in enumerate(vip):
+        ind = svc_of[(rg, dn)]
+        idef = _ind_by_name(ind)
+        w = min(idef["wage_hi"], idef["wage"] + (k % 3) + 1)
+        ads.append({"id": f"a20{k+1:02d}", "tier": "vip",
+                    "shop": f"{_SHOP_WORDS[(k+4) % len(_SHOP_WORDS)]} {_short(dn)}점",
+                    "title": _title(ind, k + 1), "region": rg, "district": dn,
+                    "industry": ind, "wage": w, "people": _PEOPLE[k % len(_PEOPLE)],
+                    "hours": _HOURS[(k+1) % len(_HOURS)], "contract": _CONTRACTS[k % 2],
+                    "settle": _SETTLES[(k+1) % len(_SETTLES)]})
+
+    # 프리미엄 — 나머지 모든 행정구에 1건씩 (지역 페이지 현지 공고 노출)
+    k = 0
+    for r in REGIONS:
+        for ds, dn in r["districts"]:
+            if (r["name"], dn) in used:
+                continue
+            ind = svc_of[(r["name"], dn)]
+            idef = _ind_by_name(ind)
+            w = idef["wage_lo"] + (k % 3)
+            ads.append({"id": f"p3{k+1:03d}", "tier": "premium",
+                        "shop": f"{_SHOP_WORDS[k % len(_SHOP_WORDS)]} {_short(dn)}점",
+                        "title": _title(ind, k), "region": r["name"], "district": dn,
+                        "industry": ind, "wage": w, "people": _PEOPLE[k % len(_PEOPLE)],
+                        "hours": _HOURS[k % len(_HOURS)], "contract": _CONTRACTS[k % 3],
+                        "settle": _SETTLES[k % len(_SETTLES)]})
+            k += 1
+    return ads
+
+
+ADS = generate_ads()
 
 # ── 업소매매 매물 ────────────────────────────────────────────
 SHOP_SALES = [
@@ -253,7 +273,7 @@ SHOP_SALES = [
     {"id": "s5002", "title": "해운대 관광상권 스웨디시샵 매매", "region": "부산", "district": "해운대구",
      "industry": "스웨디시", "area": 42, "premium": 5500, "deposit": 3000, "rent": 320,
      "revenue": "3,200~4,000", "profit": "1,300~1,700", "label": "관광상권"},
-    {"id": "s5003", "title": "분당 정자동 타이마사지 양도", "region": "경기", "district": "성남분당",
+    {"id": "s5003", "title": "분당 정자동 타이마사지 양도", "region": "경기", "district": "성남시",
      "industry": "타이", "area": 48, "premium": 6000, "deposit": 4000, "rent": 380,
      "revenue": "3,500~4,200", "profit": "1,400~1,800", "label": "오피스권"},
     {"id": "s5004", "title": "송도 신도시 프리미엄 스파", "region": "인천", "district": "연수구",
@@ -274,7 +294,7 @@ SHOP_SALES = [
     {"id": "s5009", "title": "송파 잠실 프리미엄 아로마", "region": "서울", "district": "송파구",
      "industry": "아로마", "area": 52, "premium": 6500, "deposit": 4000, "rent": 420,
      "revenue": "3,600~4,300", "profit": "1,400~1,800", "label": "역세권"},
-    {"id": "s5010", "title": "일산 라페스타 스웨디시", "region": "경기", "district": "고양일산",
+    {"id": "s5010", "title": "일산 라페스타 스웨디시", "region": "경기", "district": "고양시",
      "industry": "스웨디시", "area": 44, "premium": 4800, "deposit": 3000, "rent": 310,
      "revenue": "2,900~3,500", "profit": "1,150~1,500", "label": "번화가"},
     {"id": "s5011", "title": "서초 강남대로 타이마사지", "region": "서울", "district": "서초구",

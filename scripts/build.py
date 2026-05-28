@@ -272,6 +272,25 @@ def main():
     if dup:
         print("⚠️  중복 경로:", dup)
 
+    # 고아 파일 정리 — 이전 빌드 산출물 중 현재 경로에 없는 index.html 삭제
+    import glob
+    expected = set()
+    for p in paths:
+        expected.add(os.path.join(ROOT, "index.html") if p == "/"
+                     else os.path.join(ROOT, p.strip("/"), "index.html"))
+    removed = 0
+    for f in glob.glob(os.path.join(ROOT, "**", "index.html"), recursive=True):
+        if "/scripts/" in f.replace(os.sep, "/"):
+            continue
+        if f not in expected:
+            os.remove(f)
+            d = os.path.dirname(f)
+            if not os.listdir(d):
+                os.rmdir(d)
+            removed += 1
+    if removed:
+        print(f"🧹 고아 파일 {removed}개 정리")
+
     write_robots()
     write_sitemap(sorted(set(paths)))
     write_rss()
