@@ -71,7 +71,7 @@ def jobposting_node(ad):
 
 def ad_detail(ad):
     faqs = [
-        ("지원은 어떻게 하나요?", f"본 페이지 하단 지원 안내의 이메일({COMPANY['email']})로 이력을 보내시거나, {COMPANY['brand']} 매칭 신청을 통해 연결됩니다. 전화 직접 연결은 제공하지 않습니다."),
+        ("지원은 어떻게 하나요?", f"지원 방법은 현재 준비 중입니다. 추후 {COMPANY['brand']} 매칭 신청을 통해 연결될 예정이며, 전화 직접 연결은 제공하지 않습니다."),
         ("경력이 없어도 지원할 수 있나요?", f"{ad['shop']}은 신입 교육 과정을 운영하는 경우가 많습니다. 적성·체력 요건을 확인 후 수습 기간을 거쳐 정착할 수 있습니다."),
         ("일급 정산은 어떻게 되나요?", f"{ad['settle']} 방식입니다. 계약 시 정산 주기와 공제 항목을 근로계약서로 확인하시기 바랍니다."),
         ("근무 시간을 조정할 수 있나요?", f"공고상 근무시간은 {ad['hours']}이며, 파트타임·시간 협의가 가능한지는 채용 담당자와 상담으로 확정합니다."),
@@ -116,8 +116,7 @@ def ad_detail(ad):
 </div>
 
 <h2 id="apply" style="font-size:24px;margin-top:40px">지원하기</h2>
-<div class="linkbox"><p>지원 문의는 이메일로 받습니다. 전화 직접 연결은 제공하지 않습니다.</p>
-<a href="mailto:{COMPANY['email']}?subject=[지원] {ad['shop']} {ad['title']}">{COMPANY['email']} 로 지원 →</a></div>
+<div class="linkbox"><p>지원 방법은 준비 중입니다. 전화 직접 연결은 제공하지 않습니다.</p></div>
 
 <h2 style="font-size:24px;margin-top:30px">자주 묻는 질문</h2>
 {faq_html(faqs)}
