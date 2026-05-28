@@ -93,22 +93,59 @@ p{color:var(--muted)}
 .card:hover{border-color:rgba(123,176,255,.35)}
 .section{max-width:1240px;margin:0 auto;padding:70px 24px}
 .lead{font-size:18px;color:var(--muted);max-width:680px}
-/* ad cards */
+/* ── premium ad banners ── */
+.ad-zone{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:22px}
+.ad-zone-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:800;white-space:nowrap}
+.ad-zone-label::before{content:"";width:20px;height:1px;background:var(--line)}
 .ad-grid-vvip{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .ad-grid-vip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .ad-grid-premium{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.ad-card{border-radius:16px;padding:22px;position:relative;display:block;transition:.2s}
-.ad-card:hover{transform:translateY(-3px)}
-.ad-vvip{background:linear-gradient(135deg,#2a2210,#1a1608);border:1px solid rgba(214,178,116,.4)}
-.ad-vvip::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-2));border-radius:16px 16px 0 0}
-.ad-vip{background:var(--grad-soft);border:1px solid rgba(123,176,255,.3)}
-.ad-premium{background:var(--surface);border:1px solid var(--line)}
-.ad-rank{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:30px;color:var(--gold)}
-.ad-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;padding:3px 9px;border-radius:6px;margin-bottom:10px}
-.b-vvip{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#231803}
+.ad-card{position:relative;display:flex;flex-direction:column;border-radius:18px;padding:22px;overflow:hidden;isolation:isolate;text-decoration:none;
+  transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s,border-color .28s}
+.ad-card .ad-shine{position:absolute;top:0;left:-130%;width:55%;height:100%;z-index:2;pointer-events:none;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.16),transparent);transform:skewX(-18deg);transition:left .75s ease}
+.ad-card:hover .ad-shine{left:150%}
+.ad-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.ad-rank{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:40px;line-height:.8;opacity:.9}
+.ad-verify{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;margin-bottom:9px}
+.ad-verify::before{content:"";width:6px;height:6px;border-radius:50%}
+.ad-shop{font-size:18px;font-weight:800;letter-spacing:-.02em;margin:2px 0 5px}
+.ad-title{font-size:13.5px;color:var(--muted);margin-bottom:auto;line-height:1.5}
+.ad-wage{font-size:23px;font-weight:800;margin-top:14px;letter-spacing:-.02em}
+.ad-meta{font-size:12.5px;color:var(--dim);margin-top:6px}
+.ad-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;margin-top:16px;opacity:.82;transition:opacity .25s}
+.ad-cta i{font-style:normal;transition:transform .25s}
+.ad-card:hover .ad-cta{opacity:1}
+.ad-card:hover .ad-cta i{transform:translateX(5px)}
+.ad-disclosure{position:absolute;bottom:14px;right:14px;z-index:3;font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--dim);
+  border:1px solid var(--line);border-radius:5px;padding:1px 5px;background:rgba(0,0,0,.22)}
+/* VVIP — luxury gold banner */
+.ad-vvip{background:radial-gradient(130% 110% at 0% 0%,rgba(214,178,116,.24),transparent 55%),linear-gradient(135deg,#241d0e,#15110a 60%,#1c1607);border:1px solid rgba(214,178,116,.45)}
+.ad-vvip::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;z-index:3;background:linear-gradient(90deg,transparent,var(--gold-2),var(--gold),var(--gold-2),transparent)}
+.ad-vvip:hover{transform:translateY(-6px);border-color:rgba(244,210,156,.85);box-shadow:0 22px 55px -14px rgba(214,178,116,.5)}
+.ad-vvip .ad-rank{color:var(--gold)}
+.ad-vvip .ad-shop{color:#fff5e2}
+.ad-vvip .ad-wage{color:var(--gold-2)}
+.ad-vvip .ad-verify{color:var(--gold-2)}.ad-vvip .ad-verify::before{background:var(--gold-2);box-shadow:0 0 8px var(--gold-2)}
+.ad-vvip .ad-cta{color:var(--gold-2)}
+/* VIP — premium blue banner */
+.ad-vip{background:radial-gradient(130% 110% at 100% 0%,rgba(123,176,255,.2),transparent 55%),linear-gradient(135deg,#10182c,#0c1322);border:1px solid rgba(123,176,255,.38)}
+.ad-vip::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;z-index:3;background:linear-gradient(90deg,transparent,var(--blue-1),var(--blue-2),transparent)}
+.ad-vip:hover{transform:translateY(-6px);border-color:rgba(123,176,255,.72);box-shadow:0 18px 48px -14px rgba(91,155,255,.42)}
+.ad-vip .ad-shop{color:#eaf2ff}
+.ad-vip .ad-wage{color:var(--blue-1)}
+.ad-vip .ad-verify{color:var(--blue-1)}.ad-vip .ad-verify::before{background:var(--blue-1);box-shadow:0 0 8px var(--blue-2)}
+.ad-vip .ad-cta{color:var(--blue-1)}
+/* 프리미엄 — clean banner */
+.ad-premium{background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line)}
+.ad-premium:hover{transform:translateY(-3px);border-color:rgba(123,176,255,.35);box-shadow:0 14px 32px -16px rgba(0,0,0,.7)}
+.ad-premium .ad-wage{color:var(--blue-1)}
+.ad-premium .ad-cta{color:var(--muted)}
+/* badges */
+.ad-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.b-vvip{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#231803;box-shadow:0 2px 12px rgba(214,178,116,.45)}
 .b-vip{background:var(--grad);color:#06122e}
 .b-premium{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
-.ad-wage{font-size:22px;font-weight:800;color:var(--blue-1);margin-top:8px}
 /* price cards */
 .price-card{position:relative;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:.2s}
 .price-card::before{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;background:var(--grad)}

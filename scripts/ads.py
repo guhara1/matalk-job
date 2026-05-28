@@ -6,16 +6,21 @@ from templates import U, jsonld, breadcrumb, faq_node, faq_html
 
 TIER_LABEL = {"vvip": "VVIP", "vip": "VIP", "premium": "프리미엄"}
 
+_GLYPH = {"vvip": "★ ", "vip": "◆ ", "premium": ""}
+
 def _card(ad, rank=None):
     t = ad["tier"]
-    badge = f'<span class="ad-badge b-{t}">{TIER_LABEL[t]}</span>'
+    badge = f'<span class="ad-badge b-{t}">{_GLYPH[t]}{TIER_LABEL[t]}</span>'
     ranknum = f'<span class="ad-rank">{rank:02d}</span>' if (rank and t == "vvip") else ""
+    verify = '<div class="ad-verify">인증 업체</div>' if t in ("vvip", "vip") else ""
     return f"""<a class="ad-card ad-{t} cv" href="/ad/{ad['id']}/">
-{ranknum}{badge}
-<h3 style="margin:6px 0 4px">{ad['shop']}</h3>
-<p style="font-size:14px;color:var(--muted)">{ad['title']}</p>
+<span class="ad-shine"></span><span class="ad-disclosure">AD</span>
+<div class="ad-top">{badge}{ranknum}</div>{verify}
+<h3 class="ad-shop">{ad['shop']}</h3>
+<p class="ad-title">{ad['title']}</p>
 <div class="ad-wage">일급 {ad['wage']}만원~</div>
-<p style="font-size:13px;color:var(--dim);margin-top:6px">{ad['region']} {ad['district']} · {ad['industry']} · {ad['contract']}</p>
+<div class="ad-meta">{ad['region']} {ad['district']} · {ad['industry']} · {ad['contract']}</div>
+<div class="ad-cta">지원하기 <i>→</i></div>
 </a>"""
 
 def render_tier(tier, region=None, industry=None, limit=None, heading=True):
@@ -34,7 +39,9 @@ def render_tier(tier, region=None, industry=None, limit=None, heading=True):
     head = {"vvip": ("VVIP 추천 채용", "프리미엄 인증 업체 우선 노출"),
             "vip": ("VIP 채용공고", "검증된 추천 업체"),
             "premium": ("프리미엄 채용공고", "선등록순 노출")}[tier]
-    h = (f'<div class="kicker">{head[1]}</div><h2 style="margin:6px 0 22px">{head[0]}</h2>'
+    h = (f'<div class="ad-zone"><div><div class="kicker">{head[1]}</div>'
+         f'<h2 style="margin:6px 0 0">{head[0]}</h2></div>'
+         f'<span class="ad-zone-label">광고</span></div>'
          if heading else "")
     return f'<section class="section reveal">{h}<div class="ad-grid-{tier}">{cards}</div></section>'
 
