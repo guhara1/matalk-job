@@ -25,8 +25,7 @@ def region_hub(region):
     seo_title, seo_body = REGION_SEO.get(rs, (f"{rn} 마사지 채용 시장", ""))
     dcards = "".join(
         f'<a class="card cv" href="/locations/{rs}/{ds}/"><h3>{dn}</h3>'
-        f'<p style="font-size:13px;margin-top:6px">{get_profile(ds, dn)["land"]}</p>'
-        f'<p style="font-size:13px;color:var(--blue-1);margin-top:8px">강세 {get_profile(ds, dn)["svc"]} →</p></a>'
+        f'<p style="font-size:13px;margin-top:6px">{get_profile(ds, dn)["land"]}</p></a>'
         for ds, dn in dists)
 
     faqs = [
