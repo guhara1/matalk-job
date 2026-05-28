@@ -240,6 +240,8 @@ def write_cf_function():
 """
     out = os.path.join(ROOT, "functions", "api", "contact-ads.js")
     os.makedirs(os.path.dirname(out), exist_ok=True)
+    if os.path.exists(out):
+        return  # 커밋된 함수 파일을 소스로 유지 (덮어쓰지 않음)
     with open(out, "w", encoding="utf-8") as f:
         f.write(js)
 

@@ -1,0 +1,14 @@
+# 광고문의 → Telegram 봇 2개 연동용 환경변수.
+# 실제 값은 Cloudflare Pages > Settings > Environment variables 에 등록하세요.
+# (이 파일은 변수 이름만 안내하는 예시이며, 실제 토큰을 커밋하지 마세요.)
+
+# 봇 1 (필수)
+TELEGRAM_BOT_TOKEN_1=
+TELEGRAM_CHAT_ID_1=
+
+# 봇 2 (필수 — 2개 연결)
+TELEGRAM_BOT_TOKEN_2=
+TELEGRAM_CHAT_ID_2=
+
+# 폼 허용 출처 (선택, 기본 *)
+ALLOWED_ORIGIN=https://matalk.club
