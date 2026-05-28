@@ -23,23 +23,26 @@ def _card(ad, rank=None):
 <div class="ad-cta">지원하기 <i>→</i></div>
 </a>"""
 
-def render_tier(tier, region=None, industry=None, limit=None, heading=True):
+def _pref(items, key, val):
+    if not val:
+        return items
+    p = [a for a in items if a[key] == val]
+    return p + [a for a in items if a not in p]
+
+
+def render_tier(tier, region=None, industry=None, district=None, limit=None, heading=True):
     items = [a for a in ADS if a["tier"] == tier]
     if tier == "vvip":
-        # VVIP는 전 지역 노출 — region/industry는 정렬 우선순위로만 사용
-        if region:
-            pref = [a for a in items if a["region"] == region]
-            items = pref + [a for a in items if a not in pref]
-        if industry:
-            pref = [a for a in items if a["industry"] == industry]
-            items = pref + [a for a in items if a not in pref]
+        # VVIP는 전 지역 노출 — region/industry/district는 정렬 우선순위로만 사용
+        items = _pref(items, "region", region)
+        items = _pref(items, "industry", industry)
+        items = _pref(items, "district", district)   # 현 행정구 최우선
     else:
         # VIP·프리미엄은 해당 광역 광고만 노출 (타지역 backfill 없음)
         if region:
             items = [a for a in items if a["region"] == region]
-        if industry:  # 지역 내에서 업종 우선 정렬
-            pref = [a for a in items if a["industry"] == industry]
-            items = pref + [a for a in items if a not in pref]
+        items = _pref(items, "industry", industry)
+        items = _pref(items, "district", district)    # 현 행정구 최우선
     if limit:
         items = items[:limit]
     if not items:

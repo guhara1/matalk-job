@@ -163,7 +163,7 @@ def district_page(region, ds, dn):
 <div class="chips"><span class="chip">교통 <b>{pf['metro']}</b></span><span class="chip">고객층 <b>{pf['customer']}</b></span></div>
 </div></section>
 
-{render_tier('vvip', region=rn, industry=svc, limit=4)}
+{render_tier('vvip', region=rn, industry=svc, district=dn, limit=4)}
 
 <section class="section reveal" style="max-width:760px">
 <div class="kicker">{titles[0]}</div>
@@ -179,7 +179,7 @@ def district_page(region, ds, dn):
 <div class="note-text"><p>주 고객층은 {pf['customer']}입니다. 이 고객 특성에 맞춘 {svc} 중심의 서비스 구성이 재방문율을 높입니다.</p></div></div></div>
 </section>
 
-{render_tier('vip', region=rn, industry=svc, limit=6)}
+{render_tier('vip', region=rn, industry=svc, district=dn, limit=6)}
 
 <section class="section reveal" style="max-width:760px">
 <div class="kicker">{titles[1]}</div>
@@ -203,7 +203,7 @@ def district_page(region, ds, dn):
 
 <section class="section reveal"><h2 style="font-size:26px">{dn} 채용 자주 묻는 질문</h2>{faq_html(faqs)}</section>
 
-{render_tier('premium', region=rn, limit=8)}
+{render_tier('premium', region=rn, district=dn, limit=8)}
 
 <section class="section reveal"><div class="kicker">매칭 후기</div>
 <h2 style="margin:6px 0 22px">{dn} 매칭 사례</h2>

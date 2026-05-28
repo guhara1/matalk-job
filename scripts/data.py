@@ -209,57 +209,69 @@ def _title(name, i):
     return opts[i % len(opts)]
 
 
+# VIP 호스트 — 지역마다 6곳(섹션 6슬롯을 채우기 위함, VVIP 핵심구 제외)
+_VIP_HOSTS = {
+    "서울": ["서초구", "송파구", "마포구", "강서구", "영등포구", "성동구"],
+    "경기": ["수원시", "용인시", "고양시", "부천시", "안양시", "화성시"],
+    "인천": ["부평구", "남동구", "미추홀구", "서구", "계양구", "중구"],
+    "부산": ["부산진구", "동래구", "수영구", "남구", "연제구", "사상구"],
+}
+
+
 def generate_ads():
     from district_profiles import get_profile
-    # (지역명, 행정구명) → svc  (행정구명은 지역 간 중복되므로 튜플로 구분)
     svc_of = {}
     for r in REGIONS:
         for ds, dn in r["districts"]:
             svc_of[(r["name"], dn)] = get_profile(ds, dn)["svc"]
 
+    used_names = set()
+
+    def shop(dn, seed):
+        i = seed
+        while True:
+            n = f"{_SHOP_WORDS[i % len(_SHOP_WORDS)]} {_short(dn)}점"
+            if n not in used_names:
+                used_names.add(n)
+                return n
+            i += 1
+
     ads = []
-    # VVIP 4 — 프리미엄 핵심 상권
+    # VVIP 4 — 전국 노출 핵심 상권
     vvip = [("서울", "강남구", "아로마", 22), ("부산", "해운대구", "아로마", 23),
             ("경기", "성남시", "타이", 21), ("인천", "연수구", "아로마", 23)]
     for k, (rg, dn, ind, w) in enumerate(vvip):
-        ads.append({"id": f"a10{k+1:02d}", "tier": "vvip",
-                    "shop": f"{_SHOP_WORDS[k]} {_short(dn)}점", "title": _title(ind, k),
-                    "region": rg, "district": dn, "industry": ind, "wage": w,
-                    "people": _PEOPLE[k % len(_PEOPLE)], "hours": _HOURS[k % len(_HOURS)],
+        ads.append({"id": f"a10{k+1:02d}", "tier": "vvip", "shop": shop(dn, k),
+                    "title": _title(ind, k), "region": rg, "district": dn, "industry": ind,
+                    "wage": w, "people": _PEOPLE[k % len(_PEOPLE)], "hours": _HOURS[k % len(_HOURS)],
                     "contract": "정규직", "settle": _SETTLES[k % len(_SETTLES)]})
 
-    # VIP 12 — 주요 상권
-    vip = [("서울", "서초구"), ("서울", "송파구"), ("서울", "마포구"), ("서울", "강서구"),
-           ("경기", "수원시"), ("경기", "용인시"), ("경기", "고양시"), ("경기", "부천시"),
-           ("인천", "부평구"), ("인천", "남동구"), ("부산", "부산진구"), ("부산", "동래구")]
-    used = {(rg, dn) for rg, dn, _, _ in vvip} | set(vip)
-    for k, (rg, dn) in enumerate(vip):
-        ind = svc_of[(rg, dn)]
-        idef = _ind_by_name(ind)
-        w = min(idef["wage_hi"], idef["wage"] + (k % 3) + 1)
-        ads.append({"id": f"a20{k+1:02d}", "tier": "vip",
-                    "shop": f"{_SHOP_WORDS[(k+4) % len(_SHOP_WORDS)]} {_short(dn)}점",
-                    "title": _title(ind, k + 1), "region": rg, "district": dn,
-                    "industry": ind, "wage": w, "people": _PEOPLE[k % len(_PEOPLE)],
-                    "hours": _HOURS[(k+1) % len(_HOURS)], "contract": _CONTRACTS[k % 2],
-                    "settle": _SETTLES[(k+1) % len(_SETTLES)]})
+    # VIP — 지역별 6곳 (섹션 풀 노출)
+    vid = 1
+    for r in REGIONS:
+        rg = r["name"]
+        for j, dn in enumerate(_VIP_HOSTS[rg]):
+            ind = svc_of[(rg, dn)]
+            idef = _ind_by_name(ind)
+            w = min(idef["wage_hi"], idef["wage"] + (j % 3) + 1)
+            ads.append({"id": f"a2{vid:03d}", "tier": "vip", "shop": shop(dn, vid + 10),
+                        "title": _title(ind, vid), "region": rg, "district": dn, "industry": ind,
+                        "wage": w, "people": _PEOPLE[vid % len(_PEOPLE)], "hours": _HOURS[vid % len(_HOURS)],
+                        "contract": _CONTRACTS[vid % 2], "settle": _SETTLES[vid % len(_SETTLES)]})
+            vid += 1
 
-    # 프리미엄 — 나머지 모든 행정구에 1건씩 (지역 페이지 현지 공고 노출)
-    k = 0
+    # 프리미엄 — 82개 전 행정구 1곳씩 (각 행정구가 자기 페이지에서 먼저 노출)
+    pid = 1
     for r in REGIONS:
         for ds, dn in r["districts"]:
-            if (r["name"], dn) in used:
-                continue
             ind = svc_of[(r["name"], dn)]
             idef = _ind_by_name(ind)
-            w = idef["wage_lo"] + (k % 3)
-            ads.append({"id": f"p3{k+1:03d}", "tier": "premium",
-                        "shop": f"{_SHOP_WORDS[k % len(_SHOP_WORDS)]} {_short(dn)}점",
-                        "title": _title(ind, k), "region": r["name"], "district": dn,
-                        "industry": ind, "wage": w, "people": _PEOPLE[k % len(_PEOPLE)],
-                        "hours": _HOURS[k % len(_HOURS)], "contract": _CONTRACTS[k % 3],
-                        "settle": _SETTLES[k % len(_SETTLES)]})
-            k += 1
+            w = idef["wage_lo"] + (pid % 3)
+            ads.append({"id": f"p3{pid:03d}", "tier": "premium", "shop": shop(dn, pid + 25),
+                        "title": _title(ind, pid), "region": r["name"], "district": dn, "industry": ind,
+                        "wage": w, "people": _PEOPLE[pid % len(_PEOPLE)], "hours": _HOURS[pid % len(_HOURS)],
+                        "contract": _CONTRACTS[pid % 3], "settle": _SETTLES[pid % len(_SETTLES)]})
+            pid += 1
     return ads
 
 
