@@ -160,8 +160,7 @@ def district_page(region, ds, dn):
 <div class="kicker">{rn} {dn} 마사지 구인구직</div>
 <h1>{dn} 마사지 관리사<br><span class="grad-text">채용·일급 시세</span></h1>
 <p class="lead" style="margin-top:18px">{pf['land']} 권역 로드샵 채용 정보. {pf['customer']} 중심 수요와 동별 시세·매칭 사례를 정리했습니다.</p>
-<div class="chips"><span class="chip">강세 <b>{svc}</b></span>
-<span class="chip">교통 <b>{pf['metro']}</b></span><span class="chip">고객층 <b>{pf['customer']}</b></span></div>
+<div class="chips"><span class="chip">교통 <b>{pf['metro']}</b></span><span class="chip">고객층 <b>{pf['customer']}</b></span></div>
 </div></section>
 
 {render_tier('vvip', region=rn, industry=svc, limit=4)}
