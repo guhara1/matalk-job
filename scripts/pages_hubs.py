@@ -345,7 +345,8 @@ def magazine_article(m):
 <div class="linkbox">{others}</div>
 </article>"""
     title = f"{m['title']} | {COMPANY['brand']} 매거진"
-    desc = m["lead"] + f" {COMPANY['brand']} 매거진이 현장 데이터로 정리했습니다."
+    desc = (f"{m['lead']} {COMPANY['brand']} 매거진이 매칭 로그·현장 인터뷰 기반으로 "
+            f"{m['tag']} 가이드를 정리했습니다. 읽는 시간 약 {m['read']}분.")
     if len(desc) > 155:
         desc = desc[:152] + "…"
     return (f"/magazine/{m['slug']}/", page(title, desc, f"/magazine/{m['slug']}/", body, g, "article"))
