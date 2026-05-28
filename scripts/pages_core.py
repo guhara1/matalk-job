@@ -417,7 +417,14 @@ document.getElementById('adForm').addEventListener('submit',function(e){{
  e.preventDefault();var f=e.target,d={{}};new FormData(f).forEach(function(v,k){{d[k]=v}});
  var m=document.getElementById('adMsg');m.textContent='전송 중...';
  fetch('/api/contact-ads',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(d)}})
- .then(function(r){{return r.json()}}).then(function(j){{m.textContent=j.ok?'문의가 접수되었습니다. 곧 연락드리겠습니다.':'전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';if(j.ok)f.reset()}})
+ .then(function(r){{return r.json()}}).then(function(j){{
+  if(!j.ok){{m.textContent='전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';return}}
+  var s=j.sent||{{}},b1=s.bot1||{{}},b2=s.bot2||{{}};
+  var ok1=b1.ok===true,ok2=b2.ok===true;
+  if(ok1&&ok2){{m.textContent='문의가 접수되었습니다. 곧 연락드리겠습니다.';f.reset();return}}
+  var p=function(x){{return x.ok?'✓':'✗ '+(x.reason||'fail')}};
+  m.textContent='접수됨 (텔레그램 알림 일부 실패) — 봇1: '+p(b1)+' / 봇2: '+p(b2);
+ }})
  .catch(function(){{m.textContent='전송에 실패했습니다. 이메일({COMPANY['email']})로 문의해 주세요.'}});
 }});
 </script>"""
